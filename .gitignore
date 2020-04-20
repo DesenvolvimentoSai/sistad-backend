@@ -1,0 +1,8 @@
+node_modules
+.nyc_output
+package-lock.json
+.vscode
+client
+coverage
+estudos
+dist/
