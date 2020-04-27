@@ -135,6 +135,6 @@ npm i -S custom-env
 
     source ~/.bashrc // Reincia sem sair do terminal
 
-    ## LDAP
-npm install -s ldap-login
-npm install -D ldap-login
+## LDAP
+    npm i -S ldapauth-fork
+    npm i -S ldapauth-fork@next
