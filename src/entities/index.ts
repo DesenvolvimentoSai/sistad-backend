@@ -8,10 +8,17 @@ var basename  = path.basename(module.filename);
 const modelRelations = require('./relations/relations');
 const db : any = {};
 
+var opts = {
+  define: {
+      //prevent sequelize from pluralizing table names (Tirar o plural dos nosmes da tabelas e entidades)
+      freezeTableName: true
+  }
+}
+
 if (dbURL) {
-  var sequelize = new Sequelize(dbURL);
+  var sequelize = new Sequelize(dbURL,  opts);
 } else {
-  var sequelize = new Sequelize(database, username, password);
+  var sequelize = new Sequelize(database, username, password,  opts);
 }
 fs
   .readdirSync(__dirname)

@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.9.1-beta" last-position="0,0" last-zoom="1"
+	 default-owner="postgres">
+<database name="new_database">
+</database>
+
+<schema name="public" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<table name="tb_posto_graduacao">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<comment><![CDATA[Tabela de postos/graduação para oficiais e graduados da aeronautica.]]></comment>
+	<position x="120" y="400"/>
+	<column name="id_posto_graduacao" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="sg_posto" not-null="true">
+		<type name="varchar" length="20"/>
+		<comment><![CDATA[Sigla do posto]]></comment>
+	</column>
+	<column name="nr_posto_graduacao" not-null="true">
+		<type name="varchar" length="10"/>
+	</column>
+	<column name="cd_hrq" not-null="true">
+		<type name="varchar" length="2"/>
+	</column>
+	<column name="sg_icaer" not-null="true">
+		<type name="varchar" length="20"/>
+	</column>
+	<constraint name="pk_id_posto_graduacao" type="pk-constr" table="public.tb_posto_graduacao">
+		<columns names="id_posto_graduacao" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_cargo_funcao_relevante">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<comment><![CDATA[Tabela de cargos e funções relevantes]]></comment>
+	<position x="240" y="640"/>
+	<column name="id_cfr" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="sigla_cfr" not-null="true">
+		<type name="varchar" length="20"/>
+	</column>
+	<column name="descricao_cfr" not-null="true">
+		<type name="varchar" length="100"/>
+	</column>
+	<constraint name="pk_id_crf" type="pk-constr" table="public.tb_cargo_funcao_relevante">
+		<columns names="id_cfr" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_turma">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1220" y="720"/>
+	<column name="id_turma" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="fk_id_quadro" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="no_turma">
+		<type name="varchar" length="150"/>
+	</column>
+	<column name="dt_formacao_turma" not-null="true">
+		<type name="date" length="0"/>
+	</column>
+	<constraint name="pk_id_turma" type="pk-constr" table="public.tb_turma">
+		<columns names="id_turma" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_om">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1240" y="260"/>
+	<column name="id_om" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="nome_om" not-null="true">
+		<type name="varchar" length="150"/>
+	</column>
+	<column name="sg_om" not-null="true">
+		<type name="varchar" length="30"/>
+	</column>
+	<column name="status" not-null="true">
+		<type name="char" length="1"/>
+	</column>
+	<constraint name="pk_id_om" type="pk-constr" table="public.tb_om">
+		<columns names="id_om" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="log_acoes_sistema">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="920" y="60"/>
+	<column name="id_log" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="fk_id_pessoa">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="acao" not-null="true">
+		<type name="varchar" length="500"/>
+	</column>
+	<column name="fk_id_perfil" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="dt_ultimo_acesso" not-null="true">
+		<type name="timestamp" length="0"/>
+	</column>
+	<constraint name="pk_id_log" type="pk-constr" table="public.log_acoes_sistema">
+		<columns names="id_log" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_pessoa_fisica">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="740" y="380"/>
+	<column name="nr_ordem" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="fk_id_posto" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="fk_id_quadro" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="fk_id_om" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="fk_id_cfr" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="fk_id_perfil" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="fk_id_turma" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="fk_id_login" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="nome_pessoa" not-null="true">
+		<type name="varchar" length="150"/>
+	</column>
+	<column name="nome_guerra" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<column name="nr_ident_aer">
+		<type name="varchar" length="8"/>
+	</column>
+	<column name="dt_nascimento" not-null="true">
+		<type name="date" length="0"/>
+	</column>
+	<column name="nr_antig" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="nr_antig_sigpes" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="vl_med_cfr">
+		<type name="double precision" length="0"/>
+	</column>
+	<column name="foto" not-null="true">
+		<type name="bytea" length="0"/>
+	</column>
+	<constraint name="pk_nr_ordem" type="pk-constr" table="public.tb_pessoa_fisica">
+		<columns names="nr_ordem" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_posto">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1260" y="580"/>
+	<column name="id_posto" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="dsc_posto" not-null="true">
+		<type name="varchar" length="100"/>
+	</column>
+	<constraint name="pk_id_posto" type="pk-constr" table="public.tb_posto">
+		<columns names="id_posto" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_quadro">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1260" y="440"/>
+	<column name="id_quadro" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="dsc_quadro" not-null="true">
+		<type name="varchar" length="100"/>
+	</column>
+	<constraint name="pk_id_quadro" type="pk-constr" table="public.tb_quadro">
+		<columns names="id_quadro" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_login">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="240" y="860"/>
+	<column name="id_login" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="cpf" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="senhaCript" not-null="true">
+		<type name="varchar" length="256"/>
+	</column>
+	<column name="token" not-null="true">
+		<type name="varchar" length="256"/>
+	</column>
+	<constraint name="pk_id_login" type="pk-constr" table="public.tb_login">
+		<columns names="id_login" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<usertype name="enum_tb_perfils_tipo" configuration="enumeration">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<enumeration values="ativa,reserva,graduado,oficialç,deleted"/>
+</usertype>
+
+<table name="tb_perfil">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="160" y="180"/>
+	<column name="id_perfil" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="tipos" not-null="true">
+		<type name="public.enum_tb_perfils_tipo" length="0"/>
+	</column>
+	<column name="descricao" not-null="true">
+		<type name="serial" length="100"/>
+		<comment><![CDATA[Ativa, Reserva, Graduado, Oficial...]]></comment>
+	</column>
+</table>
+
+<constraint name="fk_id_quadro" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.tb_quadro" table="public.tb_turma">
+	<columns names="fk_id_quadro" ref-type="src-columns"/>
+	<columns names="id_quadro" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_id_pessoa_fisica" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.tb_pessoa_fisica" table="public.log_acoes_sistema">
+	<columns names="fk_id_pessoa" ref-type="src-columns"/>
+	<columns names="nr_ordem" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_id_perfil" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.tb_perfil" table="public.log_acoes_sistema">
+	<columns names="fk_id_perfil" ref-type="src-columns"/>
+	<columns names="id_perfil" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_id_om" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.tb_om" table="public.tb_pessoa_fisica">
+	<columns names="fk_id_om" ref-type="src-columns"/>
+	<columns names="id_om" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_id_cfr" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.tb_cargo_funcao_relevante" table="public.tb_pessoa_fisica">
+	<columns names="fk_id_cfr" ref-type="src-columns"/>
+	<columns names="id_cfr" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_id_turma" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.tb_turma" table="public.tb_pessoa_fisica">
+	<columns names="fk_id_turma" ref-type="src-columns"/>
+	<columns names="id_turma" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_id_perfil" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.tb_perfil" table="public.tb_pessoa_fisica">
+	<columns names="fk_id_perfil" ref-type="src-columns"/>
+	<columns names="id_perfil" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_id_quadro" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.tb_quadro" table="public.tb_pessoa_fisica">
+	<columns names="fk_id_quadro" ref-type="src-columns"/>
+	<columns names="id_quadro" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_id_posto" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.tb_posto" table="public.tb_pessoa_fisica">
+	<columns names="fk_id_posto" ref-type="src-columns"/>
+	<columns names="id_posto" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_id_login" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.tb_login" table="public.tb_pessoa_fisica">
+	<columns names="fk_id_login" ref-type="src-columns"/>
+	<columns names="id_login" ref-type="dst-columns"/>
+</constraint>
+
+<relationship name="rel_tb_turma_tb_quadro" type="relfk"
+	 src-table="public.tb_turma"
+	 dst-table="public.tb_quadro"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_log_acoes_sistema_tb_pessoa_fisica" type="relfk"
+	 src-table="public.log_acoes_sistema"
+	 dst-table="public.tb_pessoa_fisica"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_log_acoes_sistema_tb_perfil" type="relfk"
+	 src-table="public.log_acoes_sistema"
+	 dst-table="public.tb_perfil"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tb_pessoa_fisica_tb_om" type="relfk"
+	 src-table="public.tb_pessoa_fisica"
+	 dst-table="public.tb_om"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tb_pessoa_fisica_tb_cargo_funcao_relevante" type="relfk"
+	 src-table="public.tb_pessoa_fisica"
+	 dst-table="public.tb_cargo_funcao_relevante"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tb_pessoa_fisica_tb_turma" type="relfk"
+	 src-table="public.tb_pessoa_fisica"
+	 dst-table="public.tb_turma"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tb_pessoa_fisica_tb_perfil" type="relfk"
+	 src-table="public.tb_pessoa_fisica"
+	 dst-table="public.tb_perfil"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tb_pessoa_fisica_tb_quadro" type="relfk"
+	 src-table="public.tb_pessoa_fisica"
+	 dst-table="public.tb_quadro"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tb_pessoa_fisica_tb_posto" type="relfk"
+	 src-table="public.tb_pessoa_fisica"
+	 dst-table="public.tb_posto"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tb_pessoa_fisica_tb_login" type="relfk"
+	 src-table="public.tb_pessoa_fisica"
+	 dst-table="public.tb_login"
+	 src-required="false" dst-required="false"/>
+
+</dbmodel>
