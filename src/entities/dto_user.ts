@@ -1,9 +1,10 @@
 import * as bcrypt from 'bcrypt';
 
+'use strict';
 export default function (sequelize, DataTypes) {
-    const User = sequelize.define('User', {
+    const User = sequelize.define('tb_user', {
         id_user: {
-            type:DataTypes.INTEGER,
+            type:DataTypes.BIGINT,
             primaryKey: true,
             autoIncrement: true
           },

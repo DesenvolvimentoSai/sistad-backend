@@ -42,6 +42,10 @@ npm i @types/mocha @types/chai @types/supertest -D
     sequelize model:create --name User --attributes name:string,email:string,password:string
     ID, createdAt e UpdatedAt ele cria automatico
     sequelize db:migrate --env test
+    yarn sequelize db:seed src/config/database/seeders/20200423181705-users.js
+    yarn sequelize model:create --name Task --attributes title:string
+    yarn sequelize seed:generate --name Task
+    yarn sequelize-cli db:seed:all
 
 
 ### Caso de erro
@@ -138,3 +142,23 @@ npm i -S custom-env
 ## LDAP
     npm i -S ldapauth-fork
     npm i -S ldapauth-fork@next
+
+## Base de Dados
+npm install --save sequelize pg
+npm install -g sequelize-cli
+npm i sequelize @types/sequelize -D
+
+sequelize db:create
+sequelize db:migrate
+
+sequelize-cli model:generate --name Login --attributes cpf:bigint,senhacript:string,token:string
+sequelize-cli model:generate --name OM --attributes nome_om:string,sg_om:string,status:enum
+sequelize-cli model:generate --name Quadro --attributes dsc_quadro:string
+sequelize-cli model:generate --name Posto --attributes dsc_posto:string
+sequelize-cli model:generate --name Turma --attributes fk_id_quadro:bigint,no_turma:string,dt_formacao_turma:date
+    yarn sequelize db:migrate
+
+## SEQUELIZE
+Sequelize VSCode Association Snippet
+sequelize-ts-helper
+Criar arquivo ts na mão da entidade

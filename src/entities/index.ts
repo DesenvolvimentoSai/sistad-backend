@@ -5,7 +5,8 @@ const path = require('path');
 const Sequelize = require('sequelize');
 const { dbURL, database, password, username } = require('../config/env');
 var basename  = path.basename(module.filename);
-const db: any = {};
+const modelRelations = require('./relations/relations');
+const db : any = {};
 
 if (dbURL) {
   var sequelize = new Sequelize(dbURL);
@@ -31,6 +32,6 @@ Object.keys(db).forEach(modelName => {
 });
 
 db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+modelRelations(db);
 
 module.exports = db;

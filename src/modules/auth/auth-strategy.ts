@@ -19,7 +19,7 @@ export class AuthStrategy{
              * Extrai o Token do Header da Requisição atribui a uma função
              * */
         };
-        console.log(opts);
+        console.log(`Atributos opts secretOrKey = ${opts.secretOrKey}`);
         passport.use(new Strategy(opts, (jwtPayload, done) =>{
             userService
                 .getUserById(jwtPayload.id_user)

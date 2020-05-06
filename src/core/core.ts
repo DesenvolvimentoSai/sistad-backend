@@ -1,6 +1,6 @@
 import express from 'express';
 import { Application, NextFunction, Request, Response } from 'express';
-import morgan from 'morgan';
+const morgan = require('morgan')
 import * as bodyParser from 'body-parser';
 import { RouterModule } from './router/routes';
 import ResponseHandlers from './handlers/response-handlers';

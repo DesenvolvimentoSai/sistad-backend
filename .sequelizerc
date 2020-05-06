@@ -1,8 +1,10 @@
+// .sequelizerc file
 const { resolve } = require('path');
+require('custom-env').env('development');
 
 module.exports = {
-  config: resolve('src', 'config', 'database', 'database.js'),
-  'models-path': resolve('src', 'models'),
+  'config': resolve('src', 'config', 'env','index.ts'),
+  'models-path': resolve('src', 'entities'),
   'seeders-path': resolve('src', 'config', 'database', 'seeders'),
   'migrations-path': resolve('src', 'config', 'database', 'migrations'),
 }

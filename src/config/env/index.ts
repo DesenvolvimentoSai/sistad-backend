@@ -1,5 +1,5 @@
-//require('custom-env').env('development', './');
 require('custom-env').env();
+console.log("Processo rodando em: " + process.env.NODE_ENV)
 const{
     NODE_ENV,
     SERVER_HOST,

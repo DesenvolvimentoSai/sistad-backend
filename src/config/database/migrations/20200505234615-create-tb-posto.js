@@ -1,15 +1,16 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('tb_nivel_acessos', {
-      id_nivel_acesso: {
+    return queryInterface.createTable('tb_posto', {
+      id_posto: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.BIGINT
       },
-      descricao: {
-        type: Sequelize.STRING
+      dsc_posto: {
+        allowNull: false,
+        type: Sequelize.STRING(100)
       },
       createdAt: {
         allowNull: false,
@@ -22,6 +23,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('tb_nivel_acessos');
+    return queryInterface.dropTable('tb_posto');
   }
 };

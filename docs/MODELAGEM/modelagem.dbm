@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.1-beta" last-position="0,0" last-zoom="1"
+<dbmodel pgmodeler-ver="0.9.1-beta" last-position="0,518" last-zoom="1.4"
 	 default-owner="postgres">
 <database name="new_database">
 </database>
@@ -63,11 +63,14 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="id_turma" not-null="true">
 		<type name="bigint" length="0"/>
 	</column>
-	<column name="dt_formacao_turma" not-null="true">
-		<type name="date" length="0"/>
-	</column>
 	<column name="fk_id_quadro" not-null="true">
 		<type name="bigint" length="0"/>
+	</column>
+	<column name="no_turma">
+		<type name="varchar" length="150"/>
+	</column>
+	<column name="dt_formacao_turma" not-null="true">
+		<type name="date" length="0"/>
 	</column>
 	<constraint name="pk_id_turma" type="pk-constr" table="public.tb_turma">
 		<columns names="id_turma" ref-type="src-columns"/>
@@ -82,12 +85,12 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="bigint" length="0"/>
 	</column>
 	<column name="nome_om" not-null="true">
-		<type name="smallint" length="0"/>
+		<type name="varchar" length="150"/>
 	</column>
 	<column name="sg_om" not-null="true">
-		<type name="varchar" length="10"/>
+		<type name="varchar" length="30"/>
 	</column>
-	<column name="st_extinta" not-null="true">
+	<column name="status" not-null="true">
 		<type name="char" length="1"/>
 	</column>
 	<constraint name="pk_id_om" type="pk-constr" table="public.tb_om">
@@ -98,7 +101,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="log_acoes_sistema">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="820" y="120"/>
+	<position x="920" y="60"/>
 	<column name="id_log" not-null="true">
 		<type name="bigint" length="0"/>
 	</column>
@@ -122,7 +125,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="tb_pessoa_fisica">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="720" y="380"/>
+	<position x="740" y="380"/>
 	<column name="nr_ordem" not-null="true">
 		<type name="bigint" length="0"/>
 	</column>
@@ -142,6 +145,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="bigint" length="0"/>
 	</column>
 	<column name="fk_id_turma" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="fk_id_login" not-null="true">
 		<type name="bigint" length="0"/>
 	</column>
 	<column name="nome_pessoa" not-null="true">
@@ -165,6 +171,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="vl_med_cfr">
 		<type name="double precision" length="0"/>
 	</column>
+	<column name="foto" not-null="true">
+		<type name="bytea" length="0"/>
+	</column>
 	<constraint name="pk_nr_ordem" type="pk-constr" table="public.tb_pessoa_fisica">
 		<columns names="nr_ordem" ref-type="src-columns"/>
 	</constraint>
@@ -173,12 +182,15 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="tb_perfil">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="300" y="240"/>
+	<position x="160" y="180"/>
 	<column name="id_perfil" not-null="true">
 		<type name="bigint" length="0"/>
 	</column>
+	<column name="tipos" not-null="true">
+		<type name="public.enum_tb_perfils_tipo" length="0"/>
+	</column>
 	<column name="descricao" not-null="true">
-		<type name="varchar" length="100"/>
+		<type name="serial" length="100"/>
 		<comment><![CDATA[Ativa, Reserva, Graduado, Oficial...]]></comment>
 	</column>
 </table>
@@ -212,6 +224,39 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<columns names="id_quadro" ref-type="src-columns"/>
 	</constraint>
 </table>
+
+<table name="tb_login">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="240" y="860"/>
+	<column name="id_login" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="cpf" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="senhaCript" not-null="true">
+		<type name="varchar" length="256"/>
+	</column>
+	<column name="token" not-null="true">
+		<type name="varchar" length="256"/>
+	</column>
+	<constraint name="pk_id_login" type="pk-constr" table="public.tb_login">
+		<columns names="id_login" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<usertype name="enum_tb_perfils_tipo" configuration="enumeration">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<enumeration values="ativa,reserva,graduado,oficialç,deleted"/>
+</usertype>
+
+<constraint name="fk_id_quadro" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.tb_quadro" table="public.tb_turma">
+	<columns names="fk_id_quadro" ref-type="src-columns"/>
+	<columns names="id_quadro" ref-type="dst-columns"/>
+</constraint>
 
 <constraint name="fk_id_pessoa_fisica" type="fk-constr" comparison-type="MATCH FULL"
 	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.tb_pessoa_fisica" table="public.log_acoes_sistema">
@@ -261,6 +306,12 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<columns names="id_posto" ref-type="dst-columns"/>
 </constraint>
 
+<constraint name="fk_id_login" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.tb_login" table="public.tb_pessoa_fisica">
+	<columns names="fk_id_login" ref-type="src-columns"/>
+	<columns names="id_login" ref-type="dst-columns"/>
+</constraint>
+
 <relationship name="rel_tb_pessoa_fisica_tb_organizacao" type="relfk"
 	 src-table="public.tb_pessoa_fisica"
 	 dst-table="public.tb_om"
@@ -274,7 +325,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <relationship name="rel_tb_pessoa_fisica_tb_turma" type="relfk"
 	 src-table="public.tb_pessoa_fisica"
 	 dst-table="public.tb_turma"
-	 src-required="false" dst-required="false"/>
+	 src-required="false" dst-required="false">
+	<label ref-type="src-label">
+		<position x="0" y="0"/>
+	</label>
+</relationship>
 
 <relationship name="rel_log_acoes_sistema_tb_pessoa_fisica" type="relfk"
 	 src-table="public.log_acoes_sistema"
@@ -299,6 +354,16 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <relationship name="rel_tb_pessoa_fisica_tb_posto" type="relfk"
 	 src-table="public.tb_pessoa_fisica"
 	 dst-table="public.tb_posto"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tb_pessoa_fisica_tb_login" type="relfk"
+	 src-table="public.tb_pessoa_fisica"
+	 dst-table="public.tb_login"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tb_turma_tb_quadro" type="relfk"
+	 src-table="public.tb_turma"
+	 dst-table="public.tb_quadro"
 	 src-required="false" dst-required="false"/>
 
 </dbmodel>
