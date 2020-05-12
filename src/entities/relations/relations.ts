@@ -24,9 +24,6 @@ const Relations = (model) => {
     model.tb_cargo_funcao_relevante.hasMany(model.tb_pessoa_fisica,{foreignKey: 'fk_id_cfr'});
     model.tb_pessoa_fisica.belongsTo(model.tb_cargo_funcao_relevante, {foreignKey: 'id_cfr'});
     
-    model.tb_perfil.hasMany(model.tb_pessoa_fisica,{foreignKey: 'fk_id_perfil'});
-    model.tb_pessoa_fisica.belongsTo(model.tb_perfil, {foreignKey: 'id_perfil'});
-    
     model.tb_turma.hasMany(model.tb_pessoa_fisica,{foreignKey: 'fk_id_turma'});
     model.tb_pessoa_fisica.belongsTo(model.tb_turma, {foreignKey: 'id_turma'});
     
@@ -42,5 +39,19 @@ const Relations = (model) => {
 
     model.tb_perfil.hasMany(model.tb_log_acoes_sistema,{foreignKey: 'fk_id_perfil'});
     model.tb_log_acoes_sistema.belongsTo(model.tb_perfil, {foreignKey: 'id_perfil'});
+
+
+     /*RELAÇÃO ta_pessoa_fisica_has_tb_perfil
+         fk_id_pessoa
+         fk_id_perfil
+     */
+    model.tb_pessoa_fisica.hasMany(model.ta_pessoa_fisica_has_tb_perfil,{foreignKey: 'fk_id_pessoa'});
+    model.ta_pessoa_fisica_has_tb_perfil.belongsTo(model.tb_pessoa_fisica, {foreignKey: 'id_pessoa_fisica'});
+
+    model.tb_perfil.hasMany(model.ta_pessoa_fisica_has_tb_perfil,{foreignKey: 'fk_id_perfil'});
+    model.ta_pessoa_fisica_has_tb_perfil.belongsTo(model.tb_perfil, {foreignKey: 'id_perfil'});
+
+
+
 };
 module.exports = Relations;

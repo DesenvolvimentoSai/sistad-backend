@@ -24,10 +24,6 @@ module.exports = {
         type: Sequelize.BIGINT,
         references: { model: 'tb_cargo_funcao_relevante', key: 'id_cfr' }
       },
-      fk_id_perfil: {
-        type: Sequelize.BIGINT,
-        references: { model: 'tb_perfil', key: 'id_perfil' }
-      },
       fk_id_turma: {
         type: Sequelize.BIGINT,
         references: { model: 'tb_turma', key: 'id_turma' }

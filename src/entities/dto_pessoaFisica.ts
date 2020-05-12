@@ -22,10 +22,6 @@ export default function (sequelize, DataTypes) {
         type:DataTypes.BIGINT,
         allowNull: false
       },
-      fk_id_perfil: {
-        type:DataTypes.BIGINT,
-        allowNull: false
-      },
       fk_id_turma: {
         type:DataTypes.BIGINT,
         allowNull: false
