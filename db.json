@@ -1,0 +1,8 @@
+{
+  "pessoasfisicas": [
+    {"id": 1, "name": "Fernando", "cpf":"04076228456", "nu_ordem": 7273142},
+    {"id": 2, "name": "Pedro", "cpf":"22222222222", "nu_ordem": 2222222},
+    {"id": 3, "name": "Ana", "cpf":"33333333333", "nu_ordem": 3333333},
+    {"id": 4, "name": "Maria", "cpf":"44444444444", "nu_ordem": 4444444}
+  ]
+}

@@ -1,38 +1,30 @@
-var basicAuth = require('basic-auth');
-const LdapAut2 = require('ldapauth-fork'); 
+var http = require('http');
+var https = require('https');
+//Dados para o Proxy CCA-BR
+var user = '04076228456'; var senha = 'wff@260981N'; var host = '172.16.31.111'; var port = 8080;
+var proxyUrl = "http://" + user + ":" + senha + "@" + host + ":" + port;
+var cpfBusca = '04076228456';
+const chave = 'Basic ' + Buffer.from(user + ':' + senha).toString('base64');
 
-const ldapRetorno2 = new LdapAut2({
-    //url: params.ldap_url,
-    url: 'ldap://10.228.64.168:389',
-    //url: 'ldap://172.16.38.168:389',
-    searchBase: 'ou=contas,dc=fab,dc=intraer',
-    searchFilter: '(uid={{username}})',
-    reconnect: true
-});
+var url = new URL(`http://api.servicos.homolog.ccarj.intraer/sigpesApi/pessoa/militar/${cpfBusca}`);
+//var url = new URL(`https://5ebc85d2ec34e90016191911.mockapi.io/sigpesApi/pessoafissica/${id}`);
+//var url = new URL(`http://localhost:3000/pessoasfisicas/${id}`);
 
-var rejectBasicAuth = function(res) {
-  res.statusCode = 401;
-  res.setHeader('WWW-Authenticate', 'Basic realm="Example"');
-  res.end('Access denied');
-}
-
-var basicAuthMiddleware = function(req, res, next) {
-  var credentials = basicAuth(req);
-  if (!credentials) {
-    return rejectBasicAuth(res);
-  }
-  var basicAuthMiddleware = function(req, res, next) {
-    var credentials = basicAuth(req);
-    if (!credentials) {
-      return rejectBasicAuth(res);
+var options = {
+    host: host,    // IP ou End do Prox
+    port: 8080,    // Porta of proxy server
+    path: url,     // URL de destino, add 443 port for https!
+    headers: {
+      'Proxy-Authorization': chave //Autenticação para o proxy na base64
     }
-  
-    ldapRetorno2.authenticate('04076228456', 'wff@260981N', function(err, user) {
-      if (err) {
-        return rejectBasicAuth(res);
-      }
-      req.user = user;
-      next();
-    });
   };
-}
+  
+var clientHttp=(url.protocol=="https:") ? https:http; // Verificação de qual protocolo estou usando
+
+var res = clientHttp.get(options, (res) => { 
+  res.setEncoding('utf8');
+  res.on('data', (data) => { 
+    var dataJson = JSON.parse(data);
+    console.log(dataJson);
+  });
+});
