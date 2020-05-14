@@ -17,6 +17,13 @@ class ResponseHandlers {
         console.log(`Error Interno do Server: ${err}`)
         return res.status(HTTPStatus.INTERNAL_SERVER_ERROR).send(message);
     };
+
+    loginSuccess(res: Response, message: string) {  
+        return res.status(HTTPStatus.OK).send(message);
+    };
+    loginErro(res: Response, message: string) {  
+      return res.status(HTTPStatus.INTERNAL_SERVER_ERROR).send(message);
+    };
   
     authSuccess(res: Response, credentials: any, data: any) {
       //CompareSync (1° argumento: string pura senha, 2° argumento: senha do banco rash criptografada).

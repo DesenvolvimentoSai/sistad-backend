@@ -1,5 +1,6 @@
 import { AuthRouterModule } from './auth/auth-router';
 import { UserRouterModule } from './user/user-router';
+import { LoginRouterModule } from './login/login-router';
 
 export interface FeatureModuleRouter{
     moduleName: any; //Será passada a referência da class não apenas o nome.
@@ -15,6 +16,10 @@ export class ModulesRouterMapper{
         },
         {
             moduleName: UserRouterModule, 
+            parser: 'getRoutesFromModules' 
+        },
+        {
+            moduleName: LoginRouterModule, 
             parser: 'getRoutesFromModules' 
         }
     ];
