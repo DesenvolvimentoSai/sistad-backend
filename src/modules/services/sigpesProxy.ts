@@ -21,6 +21,7 @@ class SigpesProxy {
     this.conecSigpes(saram, cpf);  
   }
   conecSigpes(saram?:string, cpf?:string){
+    console.log(`SARAM 2°= ${saram}`);
     this.url = (cpf)? new URL(`http://api.servicos.homolog.ccarj.intraer/sigpesApi/pessoa/militar/${cpf}`) : new URL(`http://api.servicos.homolog.ccarj.intraer/sigpesApi/pessoaFisicas/${saram}`);
     var clientHttp=(this.url.protocol=="https:") ? https:http; // Verificação de qual protocolo estou usando
     this.opt =  {
@@ -31,10 +32,10 @@ class SigpesProxy {
         'Proxy-Authorization': this.chave //Autenticação para o proxy na base64
       }
     };
-    var req = clientHttp.get(this.opt, (res) => { 
+    clientHttp.get(this.opt, (res) => { 
       res.setEncoding('utf8');
-      res.on('data', (data) => { 
-        this.retorno = data;
+      return res.on('data', (data) => { 
+        
       });
     });
   }  
