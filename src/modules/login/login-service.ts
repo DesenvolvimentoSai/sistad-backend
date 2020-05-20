@@ -1,18 +1,29 @@
-import { ILogin, ILoginDetail, getConsultaCPF } from './login-interface';
-import Sigpes from '../services/sigpes';
+import { ILogin, ILoginDetail, getConsultaMilitar } from './login-interface';
 import SigpesProxy from '../services/sigpesProxy';
+import LdapValida from '../services/ldap';
+
 
 class ServiceLogin implements ILogin{
     public retorno: any;
 
     constructor(){}
 
-    getConsultaCPF(saram: string): boolean{
-        //var teste = Sigpes.consultaSaram('7273142');
-        //console.log(`SARAM = ${saram}`);
-        // this.retorno = SigpesProxy.getConecSigpes(saram,null);
-        this.retorno = Sigpes.consultaSaram2('7273142');
-        console.log(`DadoRetorno = ${this.retorno}`);
+    getConsultaMilitar(value): boolean{
+        console.log(`BODY::: ${JSON.stringify(value)}`)
+        var cpf = value['cpf'];
+        var saram = value['saram'];
+        var senha = value['senha'];
+        if(!senha){
+            SigpesProxy.getDataSigpes(saram,cpf, function(err, result){
+                var dados;
+                dados = (err) ? err: result;
+                console.log(`Dados de Retorno = ${dados}`);
+            });
+        }else {
+            console.log('Validar senha:::');
+            LdapValida.getConectLDAP(cpf,senha);
+        }
+
         this.retorno = true;
         return this.retorno;
     };

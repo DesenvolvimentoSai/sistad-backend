@@ -8,28 +8,38 @@ class LoginController {
     constructor(){}
      /**
      * @swagger
-     * /login/{cpf}:
+     * /login/consulta:
      *   get:
      *     tags:
      *     - "Login"
-     *     summary: "Busca usuário por CPF."
-     *     description: Consultar por CPF
+     *     summary: "Busca usuário por Saram ou CPF. Deve ser informado dados no body da Req. Vaslida senha no LDAP."
+     *     description: Consultar por Saram ou CPF. Vaslida senha no LDAP.
      *     produces:
      *       - "application/xml"
      *     parameters:
      *     - name: "cpf"
-     *       in: "path"
-     *       required: true
+     *       in: "body"
+     *       required: false
      *       type: "bigint"
+     *     - name: "senha"
+     *       in: "body"
+     *       required: false
+     *       type: "bigint"
+     *     - name: "senha"
+     *       in: "body"
+     *       required: false
+     *       type: "string"
      *     responses:
      *       200:
-     *         description: "Usuário Encontrado."
+     *         description: "Usuário Encontrado por CPF ou Saram. Senha Válida"
      *       401:
-     *         description: "Erro na consulta por CPF."
+     *         description: "Erro na consulta por CPF ou Saram e ou Senha inválida."
      */
-    consultaCPF(req: Request, res: Response){
-        var retorno = LoginService.getConsultaCPF(req.params.cpf);
-        return (retorno)?ResponseHandlers.loginSuccess(res, 'Usuário Exitente.'):ResponseHandlers.loginErro(res, 'Usuário não encontrado!');
+    getConsultaMilitar(req: Request, res: Response){
+        var retorno = LoginService.getConsultaMilitar(req.body);
+        if(req.body.cpf) return (retorno)?ResponseHandlers.loginSuccess(res, 'Consulta CPF OK.'):ResponseHandlers.loginErro(res, 'Usuário não encontrado por CPF!');
+        if(req.body.saram) return (retorno)?ResponseHandlers.loginSuccess(res, 'Consulta Saram OK.'):ResponseHandlers.loginErro(res, 'Usuário não encontrado por Saram!');
+        if(req.body.senha) return (retorno)?ResponseHandlers.loginSuccess(res, 'Consulta Senha OK.'):ResponseHandlers.loginErro(res, 'Senha não confere!');
     }
 }
 

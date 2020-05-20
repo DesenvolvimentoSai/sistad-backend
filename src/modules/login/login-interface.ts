@@ -7,6 +7,6 @@ export interface ILoginDetail extends ILogin {
     retorno: boolean;
 } 
 
-export function getConsultaCPF({ cpf } : any): boolean{
-    return cpf;
+export function getConsultaMilitar({ data } : any): boolean{
+    return data;
 }

@@ -2,7 +2,6 @@ import { BaseRouterModule, ModuleEndPointMap } from "../../core/router/base-rout
 import LoginController from './login-controller';
 
 export class LoginRouterModule extends BaseRouterModule {
-      
     constructor(){
         super('login');
     }
@@ -11,8 +10,8 @@ export class LoginRouterModule extends BaseRouterModule {
         [this.moduleName]: {
             get: [
                 {
-                    endpoint: `${ this.context }/${this.version}/${this.moduleName}/:cpf`,
-                    callback: LoginController.consultaCPF,
+                    endpoint: `${ this.context }/${this.version}/${this.moduleName}/consulta`,
+                    callback: LoginController.getConsultaMilitar,
                     isProtected: false
                 }
             ]
