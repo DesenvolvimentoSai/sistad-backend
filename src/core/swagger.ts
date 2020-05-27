@@ -52,5 +52,5 @@ const options = {
 
 const specs = swaggerJSDoc(options);
 module.exports = (app) =>{
-    app.use('/src/core/swagger',swaggerUi.serve, swaggerUi.setup(specs));
+    app.use('/api/v1/swagger',swaggerUi.serve, swaggerUi.setup(specs));
 };

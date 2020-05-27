@@ -6,3 +6,4 @@ client
 coverage
 estudos
 dist/
+.env.development

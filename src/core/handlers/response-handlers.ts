@@ -1,7 +1,7 @@
 import { Request, Response, ErrorRequestHandler, NextFunction } from 'express';
 import * as HTTPStatus from 'http-status';
 import * as jwt from 'jwt-simple';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 
 const { secret } = require('../../config/env');
 
