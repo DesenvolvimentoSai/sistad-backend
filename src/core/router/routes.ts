@@ -8,6 +8,7 @@ export class RouterModule{
     private express: Application;
 
     constructor(app: Application){
+        app.set('etag', false); // turn off Erro 304 Cache 
         this.express = app;
         this.routerFactory = new RouterModuleFactory();
     }
@@ -16,6 +17,7 @@ export class RouterModule{
         const registeredModules = this.routerFactory.getRegisteredModules();
         if(registeredModules && Array.isArray(registeredModules)){
             registeredModules.forEach(this.extractRouterInfoFromModule.bind(this, authenticate));
+            console.log('    *** /api/v1/swagger ***');
         }
     }
     private extractRouterInfoFromModule(authenticate: Function, routerFeatModule: HttpVerbMap){

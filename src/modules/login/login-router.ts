@@ -10,7 +10,7 @@ export class LoginRouterModule extends BaseRouterModule {
         [this.moduleName]: {
             get: [
                 {
-                    endpoint: `${ this.context }/${this.version}/${this.moduleName}/consulta`,
+                    endpoint: `${ this.context }/${this.version}/${this.moduleName}/consulta/:valor`,
                     callback: LoginController.getConsultaMilitar,
                     isProtected: false
                 }

@@ -9,16 +9,33 @@ const ldapRetorno = new LdapAut({
     reconnect: true
 });
 
-ldapRetorno.authenticate('04076228456', 'wff@260981N', function(err, user) {
-  if (err) {
-    console.log('Erro Conect: ' + err);
-  }
-  console.log(user);
+const ret = false ;
+
+function getLdap(callback){
+
+    ldapRetorno.authenticate('04076228456', 'wff@260981N', function(err, user) {
+    if (err) {
+      callback(err);
+    } else {
+      callback(user); 
+    }
+  });
+}
+function callback(valor) {
+  (JSON.stringify(valor.dn))?
+    this.ret = true :
+    this.ret = false ;
   fechar();
-});
+}
+
 function fechar(){
   ldapRetorno.close();
 }
+
+getLdap(callback);
+console.log(ret);
+
+
 
 /**
  * JSON RETORNADO 

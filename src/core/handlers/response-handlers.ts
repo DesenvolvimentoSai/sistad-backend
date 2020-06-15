@@ -15,14 +15,17 @@ class ResponseHandlers {
   
     onError(res: Response, message: string, err: any) {
         console.log(`Error Interno do Server: ${err}`)
-        return res.status(HTTPStatus.INTERNAL_SERVER_ERROR).send(message);
+        const valorJson = {'mensagem': message, 'error': err}
+        return res.status(HTTPStatus.INTERNAL_SERVER_ERROR).send(valorJson);
     };
 
-    loginSuccess(res: Response, message: string) {  
-        return res.status(HTTPStatus.OK).send(message);
+    loginSuccess(res: Response, message: string) {
+        const valorJson = {msn: message}  
+        return res.status(HTTPStatus.OK).send(valorJson);
     };
-    loginErro(res: Response, message: string) {  
-      return res.status(HTTPStatus.INTERNAL_SERVER_ERROR).send(message);
+    loginErro(res: Response, message: string) { 
+      const valorJson = {mensagem: message} 
+      return res.status(HTTPStatus.INTERNAL_SERVER_ERROR).send(valorJson);
     };
   
     authSuccess(res: Response, credentials: any, data: any) {

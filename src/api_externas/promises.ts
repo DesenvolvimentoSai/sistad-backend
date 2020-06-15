@@ -31,5 +31,3 @@ numeros.forEach(entry => promises.push(dividePelaMetade(entry)));
 Promise.all(promises)
     .then(results => results.forEach(entry => console.log(entry)))
     .catch(error => console.log(error));
- 
-console.log("teste");

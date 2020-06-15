@@ -8,24 +8,16 @@ class ServiceLogin implements ILogin{
 
     constructor(){}
 
-    getConsultaMilitar(value): boolean{
-        console.log(`BODY::: ${JSON.stringify(value)}`)
-        var cpf = value['cpf'];
-        var saram = value['saram'];
-        var senha = value['senha'];
-        if(!senha){
-            SigpesProxy.getDataSigpes(saram,cpf, function(err, result){
-                var dados;
-                dados = (err) ? err: result;
-                console.log(`Dados de Retorno = ${dados}`);
-            });
-        }else {
-            console.log('Validar senha:::');
-            LdapValida.getConectLDAP(cpf,senha);
-        }
-
-        this.retorno = true;
-        return this.retorno;
+    async getConsultaMilitar(value: string){
+        let retorno = false;
+        const lengthTotal = value.length;
+        if(lengthTotal == 11) var valor = value;
+        if(lengthTotal == 7) var valor = value;
+        if(lengthTotal != 11 && lengthTotal != 7) var senha = value;
+        
+        let req = await SigpesProxy.getDataSigpes(valor);
+        console.log(`RETORNO - ${JSON.stringify(req)}`);
+        return true;
     };
 }
 export default new ServiceLogin();

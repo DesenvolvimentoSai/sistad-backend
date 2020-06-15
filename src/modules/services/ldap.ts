@@ -25,6 +25,7 @@ constructor(){}
         // }
       }
     });
+    this.ldapRetorno.once
     this.ldapRetorno.authenticate(cpf, senha, function(err, user) {
       console.log(`Usuário logado = ${user}`);
       this.closeConectLDAP();
@@ -32,6 +33,7 @@ constructor(){}
       return user;
     });
   }
+
   closeConectLDAP(){
     this.ldapRetorno.close();
   }

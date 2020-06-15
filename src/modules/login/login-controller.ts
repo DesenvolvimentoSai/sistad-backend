@@ -36,10 +36,15 @@ class LoginController {
      *         description: "Erro na consulta por CPF ou Saram e ou Senha inválida."
      */
     getConsultaMilitar(req: Request, res: Response){
-        var retorno = LoginService.getConsultaMilitar(req.body);
-        if(req.body.cpf) return (retorno)?ResponseHandlers.loginSuccess(res, 'Consulta CPF OK.'):ResponseHandlers.loginErro(res, 'Usuário não encontrado por CPF!');
-        if(req.body.saram) return (retorno)?ResponseHandlers.loginSuccess(res, 'Consulta Saram OK.'):ResponseHandlers.loginErro(res, 'Usuário não encontrado por Saram!');
-        if(req.body.senha) return (retorno)?ResponseHandlers.loginSuccess(res, 'Consulta Senha OK.'):ResponseHandlers.loginErro(res, 'Senha não confere!');
+        var retorno = LoginService.getConsultaMilitar(req.params.valor);
+        const lengthTotal = req.params.valor.length;
+        if(lengthTotal == 11) var cpf = req.params.valor;
+        if(lengthTotal == 7) var saram = req.params.valor;
+        if(lengthTotal != 11 && lengthTotal != 7) var senha = req.params.valor;
+
+        if(cpf) return (retorno)?ResponseHandlers.loginSuccess(res, 'ok'):ResponseHandlers.loginErro(res, 'Usuário não encontrado por CPF!');
+        if(saram) return (retorno)?ResponseHandlers.loginSuccess(res, 'Consulta Saram OK.'):ResponseHandlers.loginErro(res, 'Usuário não encontrado por Saram!');
+        if(senha) return (retorno)?ResponseHandlers.loginSuccess(res, 'Consulta Senha OK.'):ResponseHandlers.loginErro(res, 'Senha não confere!');
     }
 }
 

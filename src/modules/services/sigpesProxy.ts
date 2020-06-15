@@ -1,11 +1,9 @@
 var http = require('http');
 var https = require('https');
-const util = require('util');
-
 
 class SigpesProxy {
-  private user = '04076228456';
-  private senha = 'wff@260981N'; 
+  private user = '12502320747';
+  private senha = '444425631003Ju@'; 
   private hostProxy = '172.16.31.111';
   private port = 8080;
   private proxyUrl = "http://" + this.user + ":" + this.senha + "@" + this.hostProxy + ":" + this.port;
@@ -19,8 +17,8 @@ class SigpesProxy {
 
   constructor(){}
   //(condição)?VERDADEIRO:FALSO;
-  getDataSigpes(saram?:string, cpf?:string, funct?){
-    this.url = (cpf)? new URL(`http://api.servicos.homolog.ccarj.intraer/sigpesApi/pessoa/militar/${cpf}`) : new URL(`http://api.servicos.homolog.ccarj.intraer/sigpesApi/pessoaFisicas/${saram}`);
+  async getDataSigpes(valor:string){
+    this.url = new URL(`http://api.servicos.homolog.ccarj.intraer/sigpesApi/pessoa/militar/${valor}`)
     var clientHttpOrHttps=(this.url.protocol=="https:") ? https:http; // Verificação de qual protocolo estou usando
     this.opt =  {
       host: this.hostProxy,    // IP ou End do Prox
@@ -31,14 +29,20 @@ class SigpesProxy {
         'Accept': 'application/json'
       }
     };
-    clientHttpOrHttps.get(this.opt, (res) => {
-      res.setEncoding('utf8');
-      res.on('data', (data) => { 
-        funct(null, data);
+    const req = await clientHttpOrHttps.get(this.opt, (res) => {
+      console.log('statusCode:', res.statusCode);
+      console.log('headers:', res.headers);
+      res.on('data', (d) => {
+         process.stdout.write(d);
       });
-    })
-    .on('error', funct)
-    .end();
+    });
+        // req.on('error', (e) => {
+        //   console.error(e);
+        // });
+
+    console.log(`RETORNO SERVCIÇO:  ${req}`);
+
+    return req; 
   }
 } 
 export default new SigpesProxy();
