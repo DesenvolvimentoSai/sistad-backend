@@ -10,7 +10,7 @@ class ResponseHandlers {
     constructor(){}
   
     onSuccess(res: Response, data: any){
-        return res.status(HTTPStatus.OK).json({ payload: data });
+        return res.status(HTTPStatus.OK).json({ payload: data }).end();
     };
   
     onError(res: Response, message: string, err: any) {
@@ -20,7 +20,7 @@ class ResponseHandlers {
     };
 
     loginSuccess(res: Response, message: string) {
-        const valorJson = {msn: message}  
+        const valorJson = {msn: message}; 
         return res.status(HTTPStatus.OK).send(valorJson);
     };
     loginErro(res: Response, message: string) { 

@@ -6,7 +6,4 @@ export interface ILogin{
 export interface ILoginDetail extends ILogin {
     retorno: boolean;
 } 
-
-export function getConsultaMilitar({ data } : any): boolean{
-    return data;
-}
+export function getConsultaMilitar( data : any, callbeckRetornoConsultaMilitar: any){}

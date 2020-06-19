@@ -2,22 +2,19 @@ var http = require('http');
 var https = require('https');
 
 class SigpesProxy {
-  private user = '12502320747';
-  private senha = '444425631003Ju@'; 
+  private user = '04076228456';
+  private senha = 'wff@260981N'; 
   private hostProxy = '172.16.31.111';
+  //private hostProxy = '172.16.38.168:389';
   private port = 8080;
-  private proxyUrl = "http://" + this.user + ":" + this.senha + "@" + this.hostProxy + ":" + this.port;
-  private cpfBusca: string;
-  private saramBusca: string;
   private chave = 'Basic ' + Buffer.from(this.user + ':' + this.senha).toString('base64');
   private opt: any; 
   private url: any;
-  
-  private retorno: any;
 
   constructor(){}
-  //(condição)?VERDADEIRO:FALSO;
-  async getDataSigpes(valor:string){
+  
+  getDataSigpes(valor:string, retornoCallbeck, callbeckRetornoConsultaMilitar){
+    var str = '';
     this.url = new URL(`http://api.servicos.homolog.ccarj.intraer/sigpesApi/pessoa/militar/${valor}`)
     var clientHttpOrHttps=(this.url.protocol=="https:") ? https:http; // Verificação de qual protocolo estou usando
     this.opt =  {
@@ -29,20 +26,24 @@ class SigpesProxy {
         'Accept': 'application/json'
       }
     };
-    const req = await clientHttpOrHttps.get(this.opt, (res) => {
-      console.log('statusCode:', res.statusCode);
-      console.log('headers:', res.headers);
-      res.on('data', (d) => {
-         process.stdout.write(d);
-      });
+    clientHttpOrHttps.get(this.opt, (res) => {
+      const { statusCode } = res;
+      const contentType = res.headers['content-type'];
+      console.log(`TEste =  ${res}`);
+      let error;
+      if (statusCode !== 200) {
+        error = new Error('Request Failed.\n' + `Status Code: ${statusCode}`);
+        //retornoCallbeck(error, statusCode, callbeckRetornoConsultaMilitar);
+      } else if (statusCode == 200) {
+        res.on('data', (data) => { 
+          try {
+            retornoCallbeck(data, statusCode, callbeckRetornoConsultaMilitar);
+          } catch (e) {
+            retornoCallbeck(e.message, statusCode, callbeckRetornoConsultaMilitar);
+          }
+        });
+      };
     });
-        // req.on('error', (e) => {
-        //   console.error(e);
-        // });
-
-    console.log(`RETORNO SERVCIÇO:  ${req}`);
-
-    return req; 
   }
 } 
 export default new SigpesProxy();

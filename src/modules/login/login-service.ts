@@ -1,6 +1,7 @@
 import { ILogin, ILoginDetail, getConsultaMilitar } from './login-interface';
-import SigpesProxy from '../services/sigpesProxy';
-import LdapValida from '../services/ldap';
+import SigpesProxyAxios from '../services/sigpesProxyAxios';
+const model = require('../../entities');
+
 
 
 class ServiceLogin implements ILogin{
@@ -8,16 +9,33 @@ class ServiceLogin implements ILogin{
 
     constructor(){}
 
-    async getConsultaMilitar(value: string){
-        let retorno = false;
-        const lengthTotal = value.length;
-        if(lengthTotal == 11) var valor = value;
-        if(lengthTotal == 7) var valor = value;
-        if(lengthTotal != 11 && lengthTotal != 7) var senha = value;
+    getConsultaMilitar(value: string, callbeckRetornoConsultaMilitar){
+        SigpesProxyAxios.getDataSigpes(value, this.retornoCallbeck, callbeckRetornoConsultaMilitar);
+    }
+    retornoCallbeck(data, statusCode, callbeckRetornoConsultaMilitar){
         
-        let req = await SigpesProxy.getDataSigpes(valor);
-        console.log(`RETORNO - ${JSON.stringify(req)}`);
-        return true;
-    };
+        // Update no banco local;
+        // sgOrg: Sigla
+        // org.nmOrg: Descrição da OM
+        // stExtinta: N ou S Extinta
+        // console.log
+        upsert({nome_om: data.org.nmOrg},{sg_om: data.sgOrg},{status: data.org.stExtinta}).then(function(result){
+            callbeckRetornoConsultaMilitar(statusCode);
+        });
+           
+        function upsert(nome_om, sg_om, status) {
+
+            return model.OM
+                .findOne({ where: sg_om })
+                .then(function(obj) {
+                    // update
+                    (status == 'N')?status = 'ativa': status = 'extinta';
+                    if(obj)
+                        return obj.update(nome_om, sg_om, status);
+                    // insert
+                    return model.OM.create(nome_om, sg_om, status);
+                })
+        }
+    }
 }
 export default new ServiceLogin();

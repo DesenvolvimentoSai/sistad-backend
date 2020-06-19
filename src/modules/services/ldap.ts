@@ -12,8 +12,8 @@ constructor(){}
     console.log(`Cheguei :: ${cpf} - ${senha}`);
     this.ldapRetorno = new LdapAut({
       //url: params.ldap_url,
-      url: 'ldap://10.228.64.168:389',
-      //url: 'ldap://172.16.38.168:389',
+      //url: 'ldap://172.16.31.111:389',
+      url: 'ldap://172.16.38.168:389',
       searchBase: 'ou=contas,dc=fab,dc=intraer',
       searchFilter: '(uid={{username}})',
       reconnect: true,
