@@ -1,3 +1,4 @@
+
 //Requisitos obrigatórios
 export interface ILogin{
     retorno: boolean;

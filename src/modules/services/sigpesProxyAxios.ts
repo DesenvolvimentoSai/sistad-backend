@@ -16,8 +16,6 @@ class SigpesProxyAxios {
         };
         axios.get(`${url}${valor}`, config)
           .then(response => {
-            console.log(response.status);
-            console.log(response.data);
             retornoCallbeck(response.data, response.status, callbeckRetornoConsultaMilitar);
           })
           .catch(error => {
