@@ -16,7 +16,14 @@ class SigpesProxyAxios {
         };
         axios.get(`${url}${valor}`, config)
           .then(response => {
-            retornoCallbeck(response.data, response.status, callbeckRetornoConsultaMilitar);
+            axios.get(`http://api.servicos.homolog.ccarj.intraer/sigpesApi/fotoes/${response.data.nrOrdem}`, config)
+              .then(foto => {
+                response.data.foto = foto;
+                retornoCallbeck(response.data, response.status, callbeckRetornoConsultaMilitar);
+              })
+              .catch(error => {
+                retornoCallbeck(error, error.status, callbeckRetornoConsultaMilitar);
+              });
           })
           .catch(error => {
             retornoCallbeck(error, error.status, callbeckRetornoConsultaMilitar);

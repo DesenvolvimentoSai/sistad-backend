@@ -14,7 +14,7 @@ class ServiceLogin implements ILogin{
     }
     retornoCallbeck(data, statusCode, callbeckRetornoConsultaMilitar){
         if(statusCode === 200){
-            // CARGO Funcao Relevante
+             // CARGO Funcao Relevante
                 //Incluindo / Atualizando informações do CARGO do militar
                 model.tb_cargo_funcao_relevante.findOne({ where: {sigla_cfr: 'nda'} }).then(function(obj){            
                     (obj)? obj.update({ 
@@ -55,7 +55,7 @@ class ServiceLogin implements ILogin{
                         sg_om: data.sgOrg,
                         status: (data.org.stExtinta = 'N')?'ativa':'extinta'
                     });
-                });
+                }); 
             return callbeckRetornoConsultaMilitar(statusCode);
         } else {
             return callbeckRetornoConsultaMilitar(statusCode);
