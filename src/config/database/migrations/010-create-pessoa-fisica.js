@@ -8,6 +8,12 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.BIGINT
       },
+      fk_id_foto: {
+        references: { model: 'tb_foto', key: 'id_foto' },
+        type: Sequelize.BIGINT,
+        primaryKey: true,
+        allowNull: false
+      },
       fk_id_posto: {
         type: Sequelize.BIGINT,
         references: { model: 'tb_posto', key: 'id_posto' }
@@ -37,6 +43,12 @@ module.exports = {
       },
       nome_guerra: {
         type: Sequelize.STRING(60)
+      },
+      nr_ordem: {
+        type: DataTypes.STRING(30),
+      },
+      nr_cpf: {
+        type: DataTypes.STRING(16),
       },
       nr_ident_aer: {
         type: Sequelize.INTEGER

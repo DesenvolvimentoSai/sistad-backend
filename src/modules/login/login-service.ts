@@ -1,7 +1,5 @@
 import { ILogin, ILoginDetail, getConsultaMilitar } from './login-interface';
 import SigpesProxyAxios from '../services/sigpesProxyAxios';
-import { IOM } from '../../entities/interfaces/om-interface';
-const { OM, User } = require('../../entities');
 const model = require('../../entities');
 
 class ServiceLogin implements ILogin{
@@ -14,6 +12,17 @@ class ServiceLogin implements ILogin{
     }
     retornoCallbeck(data, statusCode, callbeckRetornoConsultaMilitar){
         if(statusCode === 200){
+             // Foto
+                //Incluindo / Atualizando informações da Foto do militar
+                model.tb_foto.findOne({ where: {nr_ordem: data.nrOrdem} }).then(function(obj){            
+                    (obj)?obj.update({ 
+                            nr_ordem: data.nrOrdem,
+                            foto: data.foto.imFoto
+                        }) : model.tb_foto.create({
+                            nr_ordem: data.nrOrdem,
+                            foto: data.foto.imFoto
+                        });  
+                }); 
              // CARGO Funcao Relevante
                 //Incluindo / Atualizando informações do CARGO do militar
                 model.tb_cargo_funcao_relevante.findOne({ where: {sigla_cfr: 'nda'} }).then(function(obj){            
@@ -57,8 +66,20 @@ class ServiceLogin implements ILogin{
                     });
                 }); 
             return callbeckRetornoConsultaMilitar(statusCode);
+        
+        //Como o erro retornado pelo Swagger do SIGPES é 500 para tudo, 
+        //não temos como saber qual o motivo do erro.
         } else {
-            return callbeckRetornoConsultaMilitar(statusCode);
+            // // Consulta a existência do militar na base local, pois o SIGPES tá fora do ar
+            model.tb_pessoa_fisica.findOne({ where: {nr_cpf: data.nrCpf} }).then(function(obj){      
+                // Respostas de informação (100-199),
+                // Respostas de sucesso (200-299),
+                // Redirecionamentos (300-399)
+                // Erros do cliente (400-499)
+                // Erros do servidor (500-599).
+                // 201 Achei na base local || 400 Não achei na base local
+                return (obj)?callbeckRetornoConsultaMilitar(201):callbeckRetornoConsultaMilitar(400)
+            }); 
         }
     }
 }

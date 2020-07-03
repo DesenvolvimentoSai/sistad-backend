@@ -6,6 +6,10 @@ export default function (sequelize, DataTypes) {
         primaryKey: true,
         autoIncrement: true
       },
+      fk_id_foto: {
+        type:DataTypes.BIGINT,
+        allowNull: false
+      },
       fk_id_posto: {
         type:DataTypes.BIGINT,
         allowNull: false
@@ -44,6 +48,20 @@ export default function (sequelize, DataTypes) {
             notEmpty: true
         }
       },
+      nr_ordem: {
+        type: DataTypes.STRING(30),
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
+      },
+      nr_cpf: {
+        type: DataTypes.STRING(16),
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
+      },
       nr_ident_aer: {
         type:DataTypes.INTEGER,
         allowNull: false
@@ -67,10 +85,7 @@ export default function (sequelize, DataTypes) {
             notEmpty: true
         }
       },
-      foto: {
-        type:DataTypes.BLOB,
-        allowNull: false
-      }
+      
   });
   return PessoaFisica;
 };
