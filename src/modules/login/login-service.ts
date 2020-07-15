@@ -4,21 +4,20 @@ const model = require('../../entities');
 
 class ServiceLogin implements ILogin{
     public retorno: any;
-
     constructor(){}
 
     getConsultaMilitar(value: string, callbeckRetornoConsultaMilitar){
         SigpesProxyAxios.getDataSigpes(value, this.retornoCallbeck, callbeckRetornoConsultaMilitar);
     }
     retornoCallbeck(data, statusCode, callbeckRetornoConsultaMilitar){
-        if(statusCode === 200){
+        if(statusCode === 200 && data.nrOrdem){
              // Foto
                 //Incluindo / Atualizando informações da Foto do militar
                 model.tb_foto.findOne({ where: {nr_ordem: data.nrOrdem} }).then(function(obj){            
                     (obj)?obj.update({ 
                             nr_ordem: data.nrOrdem,
                             foto: data.foto.imFoto
-                        }) : model.tb_foto.create({
+                        }):model.tb_foto.create({
                             nr_ordem: data.nrOrdem,
                             foto: data.foto.imFoto
                         });  
@@ -70,15 +69,15 @@ class ServiceLogin implements ILogin{
         //Como o erro retornado pelo Swagger do SIGPES é 500 para tudo, 
         //não temos como saber qual o motivo do erro.
         } else {
-            // // Consulta a existência do militar na base local, pois o SIGPES tá fora do ar
-            model.tb_pessoa_fisica.findOne({ where: {nr_cpf: data.nrCpf} }).then(function(obj){      
+            ////Consulta a existência do militar na base local, pois o SIGPES tá fora do ar
+            model.tb_pessoa_fisica.findOne({ where: {nr_cpf: data.valor} }).then(function(obj){      
                 // Respostas de informação (100-199),
                 // Respostas de sucesso (200-299),
                 // Redirecionamentos (300-399)
                 // Erros do cliente (400-499)
                 // Erros do servidor (500-599).
-                // 201 Achei na base local || 400 Não achei na base local
-                return (obj)?callbeckRetornoConsultaMilitar(201):callbeckRetornoConsultaMilitar(400)
+                // 201 Achei na base local || 401 Não achei na base local
+                return (!obj)?callbeckRetornoConsultaMilitar(201):callbeckRetornoConsultaMilitar(401)
             }); 
         }
     }

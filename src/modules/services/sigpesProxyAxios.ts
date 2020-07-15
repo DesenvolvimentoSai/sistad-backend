@@ -1,4 +1,5 @@
 const axios = require('axios');
+axios.defaults.timeout = 1000 * 5;
 
 class SigpesProxyAxios {
     constructor(){}
@@ -12,20 +13,29 @@ class SigpesProxyAxios {
                 auth: {
                     username: '04076228456', password: 'wff@260981N'
                 }    
-            }
+            },
+            timeout: 1000 * 5, // 5 Segundos
         };
-        axios.get(`${url}${valor}`, config)
+        axios.get(`${url}${valor}`, config, { timeout: 1000 * 5 })
           .then(response => {
-            axios.get(`http://api.servicos.homolog.ccarj.intraer/sigpesApi/fotoes/${response.data.nrOrdem}`, config)
-              .then(foto => {
-                response.data.foto = foto.data;
-                retornoCallbeck(response.data, response.status, callbeckRetornoConsultaMilitar);
-              })
-              .catch(error => {
-                retornoCallbeck(error, error.status, callbeckRetornoConsultaMilitar);
-              });
+            if(response.data){
+              axios.get(`http://api.servicos.homolog.ccarj.intraer/sigpesApi/fotoes/${response.data.nrOrdem}`, config)
+                .then(foto => {
+                  response.data.foto = foto.data;
+                  retornoCallbeck(response.data, response.status, callbeckRetornoConsultaMilitar);
+                })
+                .catch(error => {
+                  error.valor = valor;
+                  retornoCallbeck(error, error.status, callbeckRetornoConsultaMilitar);
+                });
+            }else{
+              response.valor = valor;
+              retornoCallbeck(response, response.status, callbeckRetornoConsultaMilitar);  
+            }
           })
           .catch(error => {
+            error.valor = valor;
+            //Todos os erros do SIGPES estão vindo com o valor 500 
             retornoCallbeck(error, error.status, callbeckRetornoConsultaMilitar);
           });
     }

@@ -19,13 +19,13 @@ class ResponseHandlers {
         return res.status(HTTPStatus.INTERNAL_SERVER_ERROR).send(valorJson);
     };
 
-    loginSuccess(res: Response, message: string) {
+    loginSuccess(res: Response, message: string, statusCod: number) {
         const valorJson = {msn: message}; 
-        return res.status(HTTPStatus.OK).send(valorJson);
+        return res.status(statusCod).send(valorJson);
     };
-    loginErro(res: Response, message: string) { 
+    loginErro(res: Response, message: string, statusCod: number) { 
       const valorJson = {mensagem: message} 
-      return res.status(HTTPStatus.INTERNAL_SERVER_ERROR).send(valorJson);
+      return res.status(statusCod).send(valorJson);
     };
   
     authSuccess(res: Response, credentials: any, data: any) {

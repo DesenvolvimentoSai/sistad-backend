@@ -34,7 +34,7 @@ class LoginController {
      *       200:
      *         description: "Usuário Encontrado por CPF ou Saram. Senha Válida"
      *       401:
-     *         description: "Erro na consulta por CPF ou Saram e ou Senha inválida."
+     *         description: "Erro na consulta por CPF na base local. SIGPES Fora do Ar!"
      */
      
     getConsultaMilitar(req: Request, res: Response){
@@ -46,16 +46,16 @@ class LoginController {
             res.setHeader('Content-Type', 'application/json');
             console.log(`Estatus Code Final Controller = ${res.statusCode}`);
             if(lengthTotal == 11){
-                if(status == 200 || status == 300) return ResponseHandlers.loginSuccess(res,'CPF encontrado na base.'); 
-                else return ResponseHandlers.loginErro(res,'Erro do servidor CPF!');
+                if(status == 200 || status == 201 || status == 300) return ResponseHandlers.loginSuccess(res,'CPF encontrado na base.', status); 
+                else return ResponseHandlers.loginErro(res,'Erro do servidor CPF!', status);
             } 
             if(lengthTotal == 7){
-                if(status == 200 || status == 300) return ResponseHandlers.loginSuccess(res,'Saram encontrado na base.'); 
-                else return ResponseHandlers.loginErro(res,'Erro do servidor Saram!');
+                if(status == 200 || status == 201 || status == 300) return ResponseHandlers.loginSuccess(res,'Saram encontrado na base.', status); 
+                else return ResponseHandlers.loginErro(res,'Erro do servidor Saram!', status);
             } 
             if(lengthTotal != 11 && lengthTotal != 7){
-                if(status == 200 || status == 300) return ResponseHandlers.loginSuccess(res,'Senha encontrado na base.'); 
-                else return ResponseHandlers.loginErro(res,'Erro do servidor Senha!');
+                if(status == 200 || status == 201 || status == 300) return ResponseHandlers.loginSuccess(res,'Senha encontrado na base.', status); 
+                else return ResponseHandlers.loginErro(res,'Erro do servidor Senha!', status);
             } 
         });
     } 
