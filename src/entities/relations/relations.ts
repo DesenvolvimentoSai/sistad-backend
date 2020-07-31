@@ -13,7 +13,7 @@ const Relations = (model) => {
         fk_id_turma
         fk_id_login
     */ // key, targetKey, foreignKey
-    model.tb_foto.hasMany(model.tb_pessoa_fisica,{foreignKey: 'fk_id_foto'});
+    //model.tb_foto.hasMany(model.tb_pessoa_fisica,{foreignKey: 'fk_id_foto'});
     //model.tb_pessoa_fisica.belongsTo(model.tb_foto, {key: 'id_foto'});
     
     model.tb_posto.hasMany(model.tb_pessoa_fisica,{foreignKey: 'fk_id_posto'});

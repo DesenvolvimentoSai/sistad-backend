@@ -37,14 +37,13 @@ class LoginController {
      *         description: "Erro na consulta por CPF na base local. SIGPES Fora do Ar!"
      */
      
-    getConsultaMilitar(req: Request, res: Response){
+    getConsultaMilitarSIGPES(req: Request, res: Response){
         let valor = req.params.valor;
         const lengthTotal = valor.length;
-        
+        console.log("SIGPES");
         LoginService.getConsultaMilitar(req.params.valor, function (status){
             res.status(status);
             res.setHeader('Content-Type', 'application/json');
-            console.log(`Estatus Code Final Controller = ${res.statusCode}`);
             if(lengthTotal == 11){
                 if(status == 200 || status == 201 || status == 300) return ResponseHandlers.loginSuccess(res,'CPF encontrado na base.', status); 
                 else return ResponseHandlers.loginErro(res,'Erro do servidor CPF!', status);
@@ -53,12 +52,19 @@ class LoginController {
                 if(status == 200 || status == 201 || status == 300) return ResponseHandlers.loginSuccess(res,'Saram encontrado na base.', status); 
                 else return ResponseHandlers.loginErro(res,'Erro do servidor Saram!', status);
             } 
-            if(lengthTotal != 11 && lengthTotal != 7){
-                if(status == 200 || status == 201 || status == 300) return ResponseHandlers.loginSuccess(res,'Senha encontrado na base.', status); 
-                else return ResponseHandlers.loginErro(res,'Erro do servidor Senha!', status);
-            } 
         });
     } 
+    getConsultaMilitarLDAP(req: Request, res: Response){
+        console.log(`CPF = ${req.query.cpf}`);
+        console.log(`CPF = ${req.query.senha}`);
+        return LoginService.getConsultaMilitarLDAP(req.query.cpf, req.query.senha, function (jsonRetorno){
+            res.status(jsonRetorno);
+            res.setHeader('Content-Type', 'application/json');
+           // if(status == 200 || status == 201 || status == 300) return ResponseHandlers.loginSuccess(res,'Saram encontrado na base.', status); 
+            //else return ResponseHandlers.loginErro(res,'Erro do servidor Saram!', status);
+            
+        });
+    }
 }
 export default new LoginController();
 

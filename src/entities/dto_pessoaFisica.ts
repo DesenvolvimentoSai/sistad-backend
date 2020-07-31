@@ -6,10 +6,6 @@ export default function (sequelize, DataTypes) {
         primaryKey: true,
         autoIncrement: true
       },
-      fk_id_foto: {
-        type:DataTypes.BIGINT,
-        allowNull: false
-      },
       fk_id_posto: {
         type:DataTypes.BIGINT,
         allowNull: false
@@ -22,9 +18,9 @@ export default function (sequelize, DataTypes) {
         type:DataTypes.BIGINT,
         allowNull: false
       },
-      fk_id_cfr: {
+      fk_id_cfr: { //Cargo Função Relevante
         type:DataTypes.BIGINT,
-        allowNull: false
+        allowNull: true
       },
       fk_id_turma: {
         type:DataTypes.BIGINT,
@@ -32,39 +28,27 @@ export default function (sequelize, DataTypes) {
       },
       fk_id_login: {
         type:DataTypes.BIGINT,
-        allowNull: false
+        allowNull: true
       },
       nome_pessoa: {
         type: DataTypes.STRING(150),
         allowNull: false,
-        validate: {
-            notEmpty: true
-        }
       },
       nome_guerra: {
         type: DataTypes.STRING(60),
         allowNull: false,
-        validate: {
-            notEmpty: true
-        }
       },
       nr_ordem: {
         type: DataTypes.STRING(30),
         allowNull: false,
-        validate: {
-            notEmpty: true
-        }
       },
       nr_cpf: {
         type: DataTypes.STRING(16),
         allowNull: false,
-        validate: {
-            notEmpty: true
-        }
       },
-      nr_ident_aer: {
+      nr_ident_aer: { //Identidade Aeronautica
         type:DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
       },
       dt_nascimento: {
         type:DataTypes.DATE,
@@ -72,18 +56,67 @@ export default function (sequelize, DataTypes) {
       },
       nr_antiguidade: {
         type:DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
       },
       nr_antig_sigpes: {
         type:DataTypes.INTEGER,
         allowNull: false
       },
-      vl_med_cfr: {
+      vl_med_cfr: {//Valor Média Curso de Formação x
         type:DataTypes.DOUBLE(11, 2),
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
+        allowNull: true,
+      },
+      foto: {
+        type:DataTypes.BLOB,
+        allowNull: false
+      },
+      dt_praca: { //Primeira Data de Praça dtPraca
+        type:DataTypes.DATE, 
+        allowNull: false
+      },
+      dt_praca_ultima: { //Última Data de Praça x
+        type:DataTypes.DATE,
+        allowNull: false
+      },
+      dt_formacao_sigpes: { //Data Formação SIGPES x
+        type:DataTypes.DATE,
+        allowNull: false
+      },
+      st_militar: { //Situação Militar x
+        type:DataTypes.STRING,
+        allowNull: false
+      },
+      dt_ultima_promocao: { //Data Última Promoção dtPromocaoAtual
+        type:DataTypes.DATE,
+        allowNull: false
+      },
+      tx_tempo_servico: { //Tempo de Serviço txTempoServico "00 A 11 M 13 D",
+        type:DataTypes.STRING,
+        allowNull: false
+      },
+      st_quadro_sigpes: { //Situação Quadro SIGPES x
+        type:DataTypes.STRING,
+        allowNull: false
+      },
+      st_quadro_cpo: { //Situação Quadro CPO x
+        type:DataTypes.STRING,
+        allowNull: false
+      },
+      cor_raca: { // x
+        type:DataTypes.STRING,
+        allowNull: false
+      },
+      especialidade: { //sgEspd
+        type:DataTypes.STRING,
+        allowNull: false
+      },
+      sexo: { //sgSexo
+        type:DataTypes.STRING,
+        allowNull: false
+      },
+      funcao_local_om: { //sgFncoLocal
+        type:DataTypes.STRING,
+        allowNull: false
       },
       
   });

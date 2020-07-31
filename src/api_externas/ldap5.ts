@@ -9,11 +9,9 @@ const ldapRetorno = new LdapAut({
     reconnect: true
 });
 
-const ret = false ;
-
 function getLdap(callback){
 
-    ldapRetorno.authenticate('04076228456', 'wff@260981N', function(err, user) {
+    ldapRetorno.authenticate('0407622856', 'wff@260981N', function(err, user) {
     if (err) {
       callback(err);
     } else {
@@ -22,9 +20,9 @@ function getLdap(callback){
   });
 }
 function callback(valor) {
-  (JSON.stringify(valor.dn))?
-    this.ret = true :
-    this.ret = false ;
+  (valor.dn)?
+    console.log(true) :
+    console.log(false) ;
   fechar();
 }
 
@@ -33,7 +31,6 @@ function fechar(){
 }
 
 getLdap(callback);
-console.log(ret);
 
 
 
