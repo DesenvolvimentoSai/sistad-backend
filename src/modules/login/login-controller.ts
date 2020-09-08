@@ -55,14 +55,11 @@ class LoginController {
         });
     } 
     getConsultaMilitarLDAP(req: Request, res: Response){
-        console.log(`CPF = ${req.query.cpf}`);
-        console.log(`CPF = ${req.query.senha}`);
-        return LoginService.getConsultaMilitarLDAP(req.query.cpf, req.query.senha, function (jsonRetorno){
+        return LoginService.getConsultaMilitarLDAP(req.query.cpf, req.query.senha, function (jsonRetorno, status){
             res.status(jsonRetorno);
             res.setHeader('Content-Type', 'application/json');
-           // if(status == 200 || status == 201 || status == 300) return ResponseHandlers.loginSuccess(res,'Saram encontrado na base.', status); 
-            //else return ResponseHandlers.loginErro(res,'Erro do servidor Saram!', status);
-            
+            if(status == 200 || status == 201 || status == 300) return ResponseHandlers.loginSuccess(res,'Saram encontrado na base.', status); 
+            //else return ResponseHandlers.loginErro(res,'Erro do servidor Saram!', status);  
         });
     }
 }

@@ -30,7 +30,7 @@ class ServiceLogin implements ILogin{
                 //Incluindo / Atualizando informações do QUADRO do militar        
                 model.tb_quadro.findOne({ where: {dsc_quadro: data.sgQdr} }).then(function(obj){            
                     (obj)? obj.update({ 
-                        dsc_quadro: data.sgQdr 
+                        dsc_quadro: data.sgQdr,
                     }):model.tb_quadro.create({ 
                         dsc_quadro: data.sgQdr 
                     });
@@ -41,10 +41,12 @@ class ServiceLogin implements ILogin{
                     (obj)? obj.update({ 
                         nome_om: data.org.nmOrg,
                         sg_om: data.sgOrg,
+                        sessao: 'nda',
                         status: (data.org.stExtinta = 'N')?'ativa':'extinta'
                     }):model.tb_om.create({
                         nome_om: data.org.nmOrg,
                         sg_om: data.sgOrg,
+                        sessao: 'nda',
                         status: (data.org.stExtinta = 'N')?'ativa':'extinta'
                     });
                 });
@@ -121,7 +123,19 @@ class ServiceLogin implements ILogin{
                                             tx_tempo_servico:data.txTempoServico,
                                             st_quadro_sigpes:data.pesfisType,//Ñ sei
                                             st_quadro_cpo:data.pesfisType,//Ñ sei
-                                            cor_raca:'nda',
+                                            /*
+                                            "Feito o tratamento na query 
+                                            CUTIS = 'AM' THEN 'AMARELA' 
+                                            CUTIS = 'BR' THEN 'BRANCA' 
+                                            CUTIS = 'PR' THEN 'PARDA'
+                                            CUTIS = 'PT' THEN 'NEGRA' 
+                                            CUTIS = 'IN' THEN 'INDÍGENA'
+                                            */
+                                            cor_raca:   (data.sgCutis === 'AM')?'AMARELA':
+                                                        (data.sgCutis === 'BR')?'BRANCA':
+                                                        (data.sgCutis === 'PR')?'PARDA':
+                                                        (data.sgCutis === 'PT')?'NEGRA':
+                                                        (data.sgCutis === 'IN')?'INDÍGENA':'NDA',
                                             especialidade:data.sgEspd,
                                             sexo:data.sgSexo,
                                             funcao_local_om:data.sgFncoLocal                                            
@@ -151,7 +165,19 @@ class ServiceLogin implements ILogin{
                                             tx_tempo_servico:data.txTempoServico,
                                             st_quadro_sigpes:data.pesfisType,//Ñ sei
                                             st_quadro_cpo:data.pesfisType,//Ñ sei
-                                            cor_raca:'nda',
+                                            /*
+                                            "Feito o tratamento na query 
+                                            CUTIS = 'AM' THEN 'AMARELA' 
+                                            CUTIS = 'BR' THEN 'BRANCA' 
+                                            CUTIS = 'PR' THEN 'PARDA'
+                                            CUTIS = 'PT' THEN 'NEGRA' 
+                                            CUTIS = 'IN' THEN 'INDÍGENA'
+                                            */
+                                           cor_raca:   (data.sgCutis === 'AM')?'AMARELA':
+                                                       (data.sgCutis === 'BR')?'BRANCA':
+                                                       (data.sgCutis === 'PR')?'PARDA':
+                                                       (data.sgCutis === 'PT')?'NEGRA':
+                                                       (data.sgCutis === 'IN')?'INDÍGENA':'NDA',
                                             especialidade:data.sgEspd,
                                             sexo:data.sgSexo,
                                             funcao_local_om:data.sgFncoLocal 
@@ -161,10 +187,7 @@ class ServiceLogin implements ILogin{
                         });
                     });   
                 });
-            });            
-
-
-             
+            });
             return callbeckRetornoConsultaMilitar(statusCode);
         
         //Como o erro retornado pelo Swagger do SIGPES é 500 para tudo, 
@@ -184,11 +207,14 @@ class ServiceLogin implements ILogin{
     }
     retornoCallbeckValidarUser(userData, callbeckRetornoValidarUser){
         if(userData.dn) { //true
-        
-        
+            model.tb_pessoa_fisica.findOne({ where: { nr_cpf: userData.uid } }).
+            then(function(pessoa){
+                userData.pessoa = pessoa;
+                callbeckRetornoValidarUser(userData, 200);
+            });
         }else{//false
             LdapValida.closeConectLDAP();
-            callbeckRetornoValidarUser(userData.lde_message);
+            callbeckRetornoValidarUser(userData.lde_message, 400);
         }
     }
 }

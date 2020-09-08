@@ -9,16 +9,15 @@ export default function (sequelize, DataTypes) {
     nome_om: {
       type: DataTypes.STRING(150),
       allowNull: false,
-      validate: {
-          notEmpty: true
-      }
     },
     sg_om: {
       type: DataTypes.STRING(30),
       allowNull: false,
-      validate: {
-          notEmpty: true
-      }
+    },
+    sessao: {
+      type: DataTypes.STRING(30),
+      defaultValue: 'nda',
+      allowNull: true
     },
     status: {
         type: DataTypes.ENUM,

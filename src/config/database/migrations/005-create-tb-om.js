@@ -21,6 +21,11 @@ module.exports = {
         defaultValue: 'ativa',
         allowNull: false
       },
+      sessao: {
+        type: Sequelize.STRING(30),
+        defaultValue: 'nda',
+        allowNull: false
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

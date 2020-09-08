@@ -12,7 +12,11 @@ export default function (sequelize, DataTypes) {
       validate: {
           notEmpty: true
       }
-    }
+    },
+    // status: {
+    //   type: DataTypes.STRING(30),
+    //   allowNull: true
+    // }
   });
   return Quadro;
 };
