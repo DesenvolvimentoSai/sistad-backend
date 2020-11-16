@@ -34,7 +34,9 @@ proxy="http://04076228456:wff@260981N%40@proxy.ccabr.intraer:8080"
 export https_proxy=$proxy
 export http_proxy=$proxy
 export ftp_proxy=$proxy
-export no_proxy="*.intraer,localhost,127.0.0.0/8,10.0.0.0/8,192.168.0.0/16,::1,172.16.44.50,10.*,intraer,https://gitlab.com*"
+export no_proxy="localhost,127.0.0.1,*.intraer,localhost,127.0.0.0/8,10.0.0.0/8,192.168.0.0/16,::1,172.16.44.50,https://githab.com*,https://gitlab.com*,gitlab.ccabr.intraer,gitlab.example.com,gitlab.desenvolvimento.ccarj.intraer,git@gitlab.desenvolvimento.ccarj.intraer*"
+# Proxy do sistema - localhost;127.0.0.1;*.intraer;localhost;127.0.0.0/8;10.0.0.0/8;192.168.0.0/16;::1;172.16.44.50;https://githab.com*;https://gitlab.com*;gitlab.ccabr.intraer;gitlab.example.com;gitlab.desenvolvimento.ccarj.intraer;git@gitlab.desenvolvimento.ccarj.intraer*
+
 
 
 Para recarregar alterações no ~/.bashrc sem precisar fazer logout e login novamente basta executar:
